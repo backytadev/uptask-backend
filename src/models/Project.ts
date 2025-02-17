@@ -1,11 +1,14 @@
 import mongoose, { Schema, Document, PopulatedDoc, Types } from 'mongoose';
 import { ITask } from './Task';
+import { IUser } from './User';
 
 export interface IProject extends Document {
   projectName: string;
   clientName: string;
   description: string;
   tasks: PopulatedDoc<ITask & Document>[]; // le decimos que vamos almacenar aquí (referencia y la info de la task)
+  manager: PopulatedDoc<IUser & Document>; // Only manager by project
+  team: PopulatedDoc<IUser & Document>[];
 }
 
 const ProjectSchema = new Schema(
@@ -29,6 +32,16 @@ const ProjectSchema = new Schema(
       {
         type: Types.ObjectId,
         ref: 'Task',
+      },
+    ],
+    manager: {
+      type: Types.ObjectId,
+      ref: 'User',
+    },
+    team: [
+      {
+        type: Types.ObjectId,
+        ref: 'User',
       },
     ],
   },

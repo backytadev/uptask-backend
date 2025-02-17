@@ -50,3 +50,22 @@ export const taskBelongsToProject = async (
     res.status(500).json({ error: 'Hubo un error, revise los logs.' });
   }
 };
+
+export const hasAuthorization = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (req.user.id.toString() !== req.project.manager.toString()) {
+      const error = new Error('Acción no valida');
+
+      res.status(400).json({ error: error.message });
+      return;
+    }
+
+    next();
+  } catch (error) {
+    res.status(500).json({ error: 'Hubo un error, revise los logs.' });
+  }
+};
