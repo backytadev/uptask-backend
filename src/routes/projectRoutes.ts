@@ -1,18 +1,19 @@
 import { Router } from 'express';
 import { body, param } from 'express-validator';
 
-import { handleInputErrors } from '../middlewares/validation';
-import { ProjectController } from '../controllers/ProjectControllers';
-import { TaskController } from '../controllers/TaskController';
-import { projectExists } from '../middlewares/project';
 import {
+  taskExists,
   hasAuthorization,
   taskBelongsToProject,
-  taskExists,
 } from '../middlewares/task';
-import { authenticate } from '../middlewares/auth';
-import { TeamMemberController } from '../controllers/TeamControllers';
+import { TaskController } from '../controllers/TaskController';
 import { NoteController } from '../controllers/NoteController';
+import { ProjectController } from '../controllers/ProjectControllers';
+import { TeamMemberController } from '../controllers/TeamControllers';
+
+import { authenticate } from '../middlewares/auth';
+import { projectExists } from '../middlewares/project';
+import { handleInputErrors } from '../middlewares/validation';
 
 const router: Router = Router();
 
@@ -44,10 +45,13 @@ router.get(
   ProjectController.getProjectById
 );
 
+//? Middleware for project id
+router.param('projectId', projectExists); // ejecuta la validación en cada ruta que tenga este param.
+
 //* Update
 router.put(
-  '/:id',
-  param('id').isMongoId().withMessage('ID no valido.'),
+  '/:projectId',
+  param('projectId').isMongoId().withMessage('ID no valido.'),
   body('projectName')
     .notEmpty()
     .withMessage('El nombre del proyecto es requerido.'),
@@ -56,20 +60,20 @@ router.put(
     .withMessage('El nombre del cliente es requerido.'),
   body('description').notEmpty().withMessage('La descripción es requerida.'),
   handleInputErrors,
+  hasAuthorization,
   ProjectController.updateProjectById
 );
 
 //! Delete
 router.delete(
-  '/:id',
-  param('id').isMongoId().withMessage('ID no valido.'),
+  '/:projectId',
+  param('projectId').isMongoId().withMessage('ID no valido.'),
   handleInputErrors,
+  hasAuthorization,
   ProjectController.deleteProjectById
 );
 
 //? ROUTES FOR TASKS
-router.param('projectId', projectExists); // ejecuta la validación en cada ruta que tenga este param.
-
 //* Create
 router.post(
   '/:projectId/tasks',

@@ -2,7 +2,7 @@ import mongoose, { Schema, Document, PopulatedDoc, Types } from 'mongoose';
 
 export interface INote extends Document {
   content: string;
-  createBy: Types.ObjectId;
+  createdBy: Types.ObjectId;
   task: Types.ObjectId;
 }
 

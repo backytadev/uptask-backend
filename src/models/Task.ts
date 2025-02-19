@@ -1,5 +1,7 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
+import Note from '../models/Note';
+
 const taskStatus = {
   PENDING: 'pending',
   ON_HOLS: 'onHold',
@@ -66,6 +68,20 @@ const TaskSchema = new Schema(
   },
   { timestamps: true }
 );
+
+//* Middleware
+TaskSchema.pre(
+  'deleteOne',
+  {
+    document: true,
+  },
+  async function () {
+    const taskId = this._id;
+    if (!taskId) return;
+
+    await Note.deleteMany({ task: taskId });
+  }
+); // Before execute deleteOne (delete notes related to task)
 
 const Task = mongoose.model<ITask>('Task', TaskSchema);
 export default Task;
