@@ -5,15 +5,15 @@ import {
   taskExists,
   hasAuthorization,
   taskBelongsToProject,
-} from '../middlewares/task';
-import { TaskController } from '../controllers/TaskController';
-import { NoteController } from '../controllers/NoteController';
-import { ProjectController } from '../controllers/ProjectControllers';
-import { TeamMemberController } from '../controllers/TeamControllers';
+} from '@/middlewares/task';
+import { TaskController } from '@/controllers/TaskController';
+import { NoteController } from '@/controllers/NoteController';
+import { ProjectController } from '@/controllers/ProjectControllers';
+import { TeamMemberController } from '@/controllers/TeamControllers';
 
-import { authenticate } from '../middlewares/auth';
-import { projectExists } from '../middlewares/project';
-import { handleInputErrors } from '../middlewares/validation';
+import { authenticate } from '@/middlewares/auth';
+import { projectExists } from '@/middlewares/project';
+import { handleInputErrors } from '@/middlewares/validation';
 
 const router: Router = Router();
 

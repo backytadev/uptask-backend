@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 
-import User from '../models/User';
-import Project from '../models/Project';
+import User from '@/models/User';
+import Project from '@/models/Project';
 
 export class TeamMemberController {
   static findMemberByEmail = async (req: Request, res: Response) => {
@@ -11,7 +11,7 @@ export class TeamMemberController {
     const user = await User.findOne({ email }).select('id email name');
 
     if (!user) {
-      const error = new Error('Usuario no encontrado.');
+      const error = new Error('Usuario no encontrado');
       res.status(404).json({ error: error.message });
       return;
     }
@@ -35,7 +35,7 @@ export class TeamMemberController {
     const user = await User.findById({ _id: id }).select('id');
 
     if (!user) {
-      const error = new Error('Usuario no encontrado.');
+      const error = new Error('Usuario no encontrado');
       res.status(404).json({ error: error.message });
       return;
     }
@@ -43,7 +43,7 @@ export class TeamMemberController {
     if (
       req.project.team.some((team) => team.toString() === user.id.toString())
     ) {
-      const error = new Error('El usuario ya existe en el proyecto.');
+      const error = new Error('El usuario ya existe en el proyecto');
       res.status(409).json({ error: error.message });
       return;
     }
@@ -58,7 +58,7 @@ export class TeamMemberController {
     const { userId } = req.params;
 
     if (!req.project.team.some((team) => team.toString() === userId)) {
-      const error = new Error('El usuario no existe en el proyecto.');
+      const error = new Error('El usuario no existe en el proyecto');
       res.status(409).json({ error: error.message });
       return;
     }

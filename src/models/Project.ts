@@ -1,8 +1,8 @@
 import mongoose, { Schema, Document, PopulatedDoc, Types } from 'mongoose';
 
-import Note from '../models/Note';
-import { IUser } from '../models/User';
-import Task, { ITask } from '../models/Task';
+import Note from '@/models/Note';
+import { IUser } from '@/models/User';
+import Task, { ITask } from '@/models/Task';
 
 export interface IProject extends Document {
   projectName: string;

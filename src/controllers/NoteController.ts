@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { Types } from 'mongoose';
 
-import Note, { INote } from '../models/Note';
+import Note, { INote } from '@/models/Note';
 
 type NoteParams = {
   noteId: Types.ObjectId;
@@ -21,7 +21,7 @@ export class NoteController {
     try {
       await Promise.allSettled([note.save(), req.task.save()]);
 
-      res.send('Nota Creada Correctamente.');
+      res.send('Nota Creada Correctamente');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error.' });
     }
@@ -41,13 +41,13 @@ export class NoteController {
     const note = await Note.findById(noteId);
 
     if (!note) {
-      const error = new Error('Nota no encontrada.');
+      const error = new Error('Nota no encontrada');
       res.status(404).json({ error: error.message });
       return;
     }
 
     if (note.createdBy.toString() !== req.user.id.toString()) {
-      const error = new Error('Acción no válida.');
+      const error = new Error('Acción no válida');
       res.status(401).json({ error: error.message });
       return;
     }
@@ -57,7 +57,7 @@ export class NoteController {
     try {
       await Promise.allSettled([req.task.save(), note.deleteOne()]);
 
-      res.send('Nota Eliminada.');
+      res.send('Nota Eliminada');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error.' });
     }

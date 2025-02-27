@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import Project from '../models/Project';
+import Project from '@/models/Project';
 
 export class ProjectController {
   //* Create
@@ -12,7 +12,7 @@ export class ProjectController {
 
     try {
       await project.save();
-      res.send('Proyecto creado correctamente.');
+      res.send('Proyecto creado correctamente');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revise los logs.' });
     }
@@ -41,7 +41,7 @@ export class ProjectController {
       const project = await Project.findById(id).populate('tasks');
 
       if (!project) {
-        const error = new Error('Proyecto no encontrado.');
+        const error = new Error('Proyecto no encontrado');
         res.status(404).json({ error: error.message });
         return;
       }
@@ -50,7 +50,7 @@ export class ProjectController {
         project.manager.toString() !== req.user.id.toString() &&
         !project.team.includes(req.user.id)
       ) {
-        const error = new Error('Acción no valida.');
+        const error = new Error('Acción no valida');
         res.status(404).json({ error: error.message });
         return;
       }
@@ -69,7 +69,7 @@ export class ProjectController {
       req.project.description = req.body.description;
 
       await req.project.save();
-      res.send('Proyecto Actualizado.');
+      res.send('Proyecto Actualizado');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revise los logs.' });
     }
@@ -79,7 +79,7 @@ export class ProjectController {
   static deleteProjectById = async (req: Request, res: Response) => {
     try {
       await req.project.deleteOne();
-      res.send('Proyecto Eliminado.');
+      res.send('Proyecto Eliminado');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revise los logs.' });
     }

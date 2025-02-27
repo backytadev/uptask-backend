@@ -4,11 +4,11 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 
-import { connectDB } from './config/db';
-import { corsConfig } from './config/cors';
+import { connectDB } from '@/config/db';
+import { corsConfig } from '@/config/cors';
 
-import authRoutes from './routes/authRoutes';
-import projectRoutes from './routes/projectRoutes';
+import authRoutes from '@/routes/authRoutes';
+import projectRoutes from '@/routes/projectRoutes';
 
 dotenv.config();
 connectDB();

@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
-import Note from '../models/Note';
+import Note from '@/models/Note';
 
 const taskStatus = {
   PENDING: 'pending',

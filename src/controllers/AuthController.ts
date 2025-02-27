@@ -1,13 +1,13 @@
 import type { Request, Response } from 'express';
 
-import User from '../models/User';
-import Token from '../models/Token';
+import User from '@/models/User';
+import Token from '@/models/Token';
 
-import { AuthEmail } from '../emails/AuthEmail';
+import { AuthEmail } from '@/emails/AuthEmail';
 
-import { generateJWT } from '../utils/jwt';
-import { generateToken } from '../utils/token';
-import { checkPassword, hashPassword } from '../utils/auth';
+import { generateJWT } from '@/utils/jwt';
+import { generateToken } from '@/utils/token';
+import { checkPassword, hashPassword } from '@/utils/auth';
 
 export class AuthController {
   static createAccount = async (req: Request, res: Response) => {
@@ -17,7 +17,7 @@ export class AuthController {
       // Prevenir duplicados
       const userExists = await User.findOne({ email });
       if (userExists) {
-        const error = new Error('El usuario ya esta registrado.');
+        const error = new Error('El usuario ya esta registrado');
         res.status(409).json({ error: error.message });
         return;
       }
@@ -41,7 +41,7 @@ export class AuthController {
 
       await Promise.allSettled([user.save(), token.save()]);
 
-      res.send('Cuenta creada, revisa tu email para confirmarla.');
+      res.send('Cuenta creada, revisa tu email para confirmarla');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revisa los logs.' });
     }
@@ -63,7 +63,7 @@ export class AuthController {
       user.confirmed = true;
 
       await Promise.allSettled([user.save(), tokenExists.deleteOne()]);
-      res.send('Cuenta confirmada correctamente.');
+      res.send('Cuenta confirmada correctamente');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revisa los logs.' });
     }
@@ -75,7 +75,7 @@ export class AuthController {
       const user = await User.findOne({ email });
 
       if (!user) {
-        const error = new Error('Usuario no encontrado.');
+        const error = new Error('Usuario no encontrado');
         res.status(404).json({ error: error.message });
         return;
       }
@@ -94,7 +94,7 @@ export class AuthController {
         });
 
         const error = new Error(
-          'La cuenta no ha sido confirmada, hemos enviado un e-mail de confirmación.'
+          'La cuenta no ha sido confirmada, hemos enviado un e-mail de confirmación'
         );
         res.status(401).json({ error: error.message });
         return;
@@ -104,7 +104,7 @@ export class AuthController {
       const isPasswordCorrect = await checkPassword(password, user.password);
 
       if (!isPasswordCorrect) {
-        const error = new Error('Password incorrecto.');
+        const error = new Error('Password incorrecto');
         res.status(401).json({ error: error.message });
         return;
       }
@@ -124,13 +124,13 @@ export class AuthController {
       // User exists
       const user = await User.findOne({ email });
       if (!user) {
-        const error = new Error('El usuario no es ta registrado.');
+        const error = new Error('El usuario no es ta registrado');
         res.status(409).json({ error: error.message });
         return;
       }
 
       if (user.confirmed) {
-        const error = new Error('El usuario ya esta confirmado.');
+        const error = new Error('El usuario ya esta confirmado');
         res.status(403).json({ error: error.message });
         return;
       }
@@ -149,7 +149,7 @@ export class AuthController {
 
       await Promise.allSettled([user.save(), token.save()]);
 
-      res.send('Se envió un nuevo token a tu e-mail.');
+      res.send('Se envió un nuevo token a tu e-mail');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revisa los logs.' });
     }
@@ -180,7 +180,7 @@ export class AuthController {
         token: token.token,
       });
 
-      res.send('Revisa tu e-mail para instrucciones.');
+      res.send('Revisa tu e-mail para instrucciones');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revisa los logs.' });
     }
@@ -198,7 +198,7 @@ export class AuthController {
         return;
       }
 
-      res.send('Token valido, define tu nueva contraseña.');
+      res.send('Token valido, define tu nueva contraseña');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revisa los logs.' });
     }
@@ -221,7 +221,7 @@ export class AuthController {
 
       await Promise.allSettled([user.save(), tokenExists.deleteOne()]);
 
-      res.send('Las contraseña se modifico correctamente.');
+      res.send('Las contraseña se modifico correctamente');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revisa los logs.' });
     }
@@ -247,7 +247,7 @@ export class AuthController {
 
     try {
       await req.user.save();
-      res.send('Perfil actualizado correctamente.');
+      res.send('Perfil actualizado correctamente');
     } catch (error) {
       res.status(500).send('Hubo un error.');
     }
@@ -264,7 +264,7 @@ export class AuthController {
     );
 
     if (!isPasswordCorrect) {
-      const error = new Error('El password actual es incorrecto.');
+      const error = new Error('El password actual es incorrecto');
       res.status(409).json({ error: error.message });
       return;
     }
@@ -272,7 +272,7 @@ export class AuthController {
     try {
       user.password = await hashPassword(password);
       await user.save();
-      res.send('El Password se modifico correctamente.');
+      res.send('El Password se modifico correctamente');
     } catch (error) {
       res.status(500).send('Hubo un error.');
     }
@@ -286,11 +286,11 @@ export class AuthController {
     const isPasswordCorrect = await checkPassword(password, user.password);
 
     if (!isPasswordCorrect) {
-      const error = new Error('El password es incorrecto.');
+      const error = new Error('El password es incorrecto');
       res.status(409).json({ error: error.message });
       return;
     }
 
-    res.send('Password Correcto.');
+    res.send('Password Correcto');
   };
 }
