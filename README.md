@@ -24,6 +24,7 @@ In this project, the RESTful API and the backend for a project, task and member 
 Install my-project with npm or pnpm
 
 1. Clone the project
+
 2. Install dependencies
 
 ```
@@ -31,6 +32,7 @@ npm i or pnpm i
 ```
 
 3. Clone the `.env.template` and change it to `.env` and configure its environment variables.
+
 4. Raise the DB development, executing the command
 
 ```
