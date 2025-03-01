@@ -30,9 +30,19 @@ export class TeamMemberController {
 
   static addMemberById = async (req: Request, res: Response) => {
     const { id } = req.body;
+    const { projectId } = req.params;
 
-    // Find user
+    // Find project and user
     const user = await User.findById({ _id: id }).select('id');
+    const project = await Project.findById({ _id: projectId });
+
+    if (project.manager.toString() === user.id.toString()) {
+      const error = new Error(
+        'El manager no puede ser agregado como colaborador'
+      );
+      res.status(404).json({ error: error.message });
+      return;
+    }
 
     if (!user) {
       const error = new Error('Usuario no encontrado');
