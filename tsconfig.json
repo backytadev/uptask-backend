@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-      "outDir": "./dist",
-      "rootDir": "./src",
+      "outDir": "dist",
+      "rootDir": "src",
       "lib": ["esnext"],
       "target": "ESNext",
       "moduleResolution": "NodeNext",
       "module": "NodeNext",
+      "resolveJsonModule": true,
       "strict": false,
       "sourceMap": true,
       "esModuleInterop": true,
