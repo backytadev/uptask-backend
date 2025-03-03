@@ -21,7 +21,7 @@ export class NoteController {
     try {
       await Promise.allSettled([note.save(), req.task.save()]);
 
-      res.send('Nota Creada Correctamente');
+      res.send('Nota creada correctamente');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error.' });
     }

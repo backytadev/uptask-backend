@@ -69,7 +69,7 @@ export class ProjectController {
       req.project.description = req.body.description;
 
       await req.project.save();
-      res.send('Proyecto Actualizado');
+      res.send('Proyecto actualizado correctamente');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revise los logs.' });
     }
@@ -79,7 +79,7 @@ export class ProjectController {
   static deleteProjectById = async (req: Request, res: Response) => {
     try {
       await req.project.deleteOne();
-      res.send('Proyecto Eliminado');
+      res.send('Proyecto eliminado correctamente');
     } catch (error) {
       res.status(500).json({ error: 'Hubo un error, revise los logs.' });
     }

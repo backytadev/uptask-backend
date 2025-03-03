@@ -78,6 +78,6 @@ export class TeamMemberController {
     );
 
     await req.project.save();
-    res.send('Usuario eliminado correctamente.');
+    res.send('Usuario eliminado correctamente');
   };
 }

@@ -264,7 +264,7 @@ export class AuthController {
     );
 
     if (!isPasswordCorrect) {
-      const error = new Error('El password actual es incorrecto');
+      const error = new Error('La contraseña actual es incorrecto');
       res.status(409).json({ error: error.message });
       return;
     }
@@ -272,7 +272,7 @@ export class AuthController {
     try {
       user.password = await hashPassword(password);
       await user.save();
-      res.send('El Password se modifico correctamente');
+      res.send('La contraseña se modifico correctamente');
     } catch (error) {
       res.status(500).send('Hubo un error.');
     }
